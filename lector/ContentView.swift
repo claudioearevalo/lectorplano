@@ -30,6 +30,8 @@ struct ContentView: View {
             .padding()
                 Button(role: .destructive, action:
                 {
+
+                    
                     let cajaDedialogo = NSOpenPanel()
                     cajaDedialogo.title = "Abrir archivo"
                     cajaDedialogo.allowsMultipleSelection = false
@@ -56,41 +58,45 @@ struct ContentView: View {
                  Label("Archivo", systemImage: "folder.fill")
                 }
                 .frame(width: 100, height: 50)
+                .aspectRatio(contentMode: .fill)
                 .background(Color.yellow)
                 .foregroundColor(Color.black)
                 .cornerRadius(6)
-                .frame(width: 100, height: 50)
                 .padding()
-                
+                .buttonStyle(BorderlessButtonStyle())
 
                     Button(role: .destructive, action:
                     {
 
-
+                        if contenidoDelarchivo != nil {
                         do {
                             try contenidoDelarchivo.write(to: resultado!, atomically: true, encoding: String.Encoding.utf8)
                         } catch {
 
+                        }
                         }
                     })
                     {
                      Label("Grabar", systemImage: "square.and.arrow.down")
                     }
                     .frame(width: 100, height: 50)
+                    .aspectRatio(contentMode: .fill)
                     .background(Color.yellow)
                     .foregroundColor(Color.black)
                     .cornerRadius(6)
-                    .frame(width: 100, height: 50)
                     .padding()
+                    .buttonStyle(BorderlessButtonStyle())
             }
             TextEditor(text: $contenidoDelarchivo)
-                .frame(width: 400, height: 400, alignment: .top)
                 .border(Color.orange, width: 2)
-                
+                .font(.system(size: 18))
                 
         }
     }
 }
+
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
