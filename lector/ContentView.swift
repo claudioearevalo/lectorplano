@@ -22,7 +22,7 @@ struct ContentView: View {
     var body: some View {
         VStack{
             HStack{
-            Label("Lector MD", systemImage: "bolt.fill")
+            Label("lector-nombreDelaapp-key", systemImage: "bolt.fill")
             .frame(width: 100, height: 50)
             .background(Color.yellow)
             .foregroundColor(Color.black)
@@ -33,9 +33,11 @@ struct ContentView: View {
 
                     
                     let cajaDedialogo = NSOpenPanel()
-                    cajaDedialogo.title = "Abrir archivo"
+                    cajaDedialogo.title = "lector-caja-dialogo-key"
+                    cajaDedialogo.showsResizeIndicator = true
                     cajaDedialogo.allowsMultipleSelection = false
                     cajaDedialogo.canChooseDirectories = false
+                    
                     cajaDedialogo.allowedContentTypes = [.plainText]
                     if cajaDedialogo.runModal() == .OK {
                         resultado = cajaDedialogo.url
@@ -55,7 +57,7 @@ struct ContentView: View {
                     }
                 })
                 {
-                 Label("Archivo", systemImage: "folder.fill")
+                 Label("lector-archivo-key", systemImage: "folder.fill")
                 }
                 .frame(width: 100, height: 50)
                 .aspectRatio(contentMode: .fill)
@@ -68,16 +70,18 @@ struct ContentView: View {
                     Button(role: .destructive, action:
                     {
 
-                        if contenidoDelarchivo != nil {
+                        if contenidoDelarchivo != "" {
                         do {
                             try contenidoDelarchivo.write(to: resultado!, atomically: true, encoding: String.Encoding.utf8)
-                        } catch {
+                        }
+                            catch {
+                                
+                        }
+                        }
 
-                        }
-                        }
                     })
                     {
-                     Label("Grabar", systemImage: "square.and.arrow.down")
+                     Label("lector-grabar-key", systemImage: "square.and.arrow.down")
                     }
                     .frame(width: 100, height: 50)
                     .aspectRatio(contentMode: .fill)

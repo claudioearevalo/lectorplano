@@ -1,0 +1,11 @@
+/* 
+  traduccion.strings
+  lector
+
+  Created by Claudio Arevalo on 30/05/2022.
+  
+*/
+"lector-nombreDelaapp-key" = "Lector";
+"lector-archivo-key" = "Archivo";
+"lector-grabar-key" = "Grabar";
+"lector-caja-dialogo-key" = "Abrir Archivo";

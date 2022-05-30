@@ -13,7 +13,8 @@ struct lectorApp: App {
         WindowGroup {
             //llama al contenido preciamente seteando form min y max
             ContentView().frame(minWidth: 400, maxWidth: .infinity, minHeight: 800, maxHeight: .infinity)
+                .navigationTitle("Lector 1.0")
+            }
         }
-    }
 }
 
