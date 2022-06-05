@@ -9,4 +9,5 @@
 "lector-archivo-key" = "File";
 "lector-grabar-key" = "Save";
 "lector-caja-dialogo-key" = "Open File";
+"lector-caja-dialogo-grabar-key" = "Save File";
 

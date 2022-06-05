@@ -14,10 +14,13 @@ import Foundation
 
 struct ContentView: View {
     
-
+    @State private var versionApp = "Lector 1.0"
+    @State private var archivoAeditar = ""
     @State private var mensaje = "None"
     @State private var contenidoDelarchivo = ""
     @State private var resultado:URL?
+    
+    private let tipoDearchivos = ["txt", "md", "csv"]
     
     var body: some View {
         VStack{
@@ -33,12 +36,11 @@ struct ContentView: View {
 
                     
                     let cajaDedialogo = NSOpenPanel()
-                    cajaDedialogo.title = "lector-caja-dialogo-key"
+                    cajaDedialogo.message = NSLocalizedString("lector-caja-dialogo-key", comment: "")
                     cajaDedialogo.showsResizeIndicator = true
                     cajaDedialogo.allowsMultipleSelection = false
                     cajaDedialogo.canChooseDirectories = false
-                    
-                    cajaDedialogo.allowedContentTypes = [.plainText]
+                    cajaDedialogo.allowedFileTypes = tipoDearchivos
                     if cajaDedialogo.runModal() == .OK {
                         resultado = cajaDedialogo.url
                         //Self.ubicacionDelarchivo = String(resultado!)
@@ -47,6 +49,8 @@ struct ContentView: View {
                         {
                             do {
                                 try contenidoDelarchivo = String(data: Data(contentsOf: resultado!), encoding: .utf8)!
+                                    archivoAeditar = " - " + cajaDedialogo.url!.lastPathComponent
+                                
                             }
                             catch
                             {
@@ -70,13 +74,24 @@ struct ContentView: View {
                     Button(role: .destructive, action:
                     {
 
-                        if contenidoDelarchivo != "" {
-                        do {
-                            try contenidoDelarchivo.write(to: resultado!, atomically: true, encoding: String.Encoding.utf8)
+                        if (contenidoDelarchivo != "" && resultado != nil) {
+                            grabarContenido()
                         }
-                            catch {
-                                
-                        }
+                        else
+                        {
+                            //si no hay nombre hay que darle nombre
+                            let cajaDedialogograbar = NSSavePanel()
+                            cajaDedialogograbar.message = NSLocalizedString("lector-caja-dialogo-grabar-key", comment: "")
+                            cajaDedialogograbar.nameFieldStringValue = "Nota"
+                            cajaDedialogograbar.canCreateDirectories = true
+                            cajaDedialogograbar.allowedFileTypes = tipoDearchivos
+                            cajaDedialogograbar.begin { response in
+                                if response == NSApplication.ModalResponse.OK, let archivoAsignado = cajaDedialogograbar.url {
+                                    resultado = cajaDedialogograbar.url
+                                    archivoAeditar = " - " + cajaDedialogograbar.url!.lastPathComponent
+                                    grabarContenido()
+                                }
+                            }
                         }
 
                     })
@@ -94,6 +109,16 @@ struct ContentView: View {
             TextEditor(text: $contenidoDelarchivo)
                 .border(Color.orange, width: 2)
                 .font(.system(size: 18))
+                
+        }.navigationTitle(versionApp + archivoAeditar)
+    }
+    
+    func grabarContenido() {
+        do {
+            try contenidoDelarchivo.write(to: resultado!, atomically: true, encoding: String.Encoding.utf8)
+                
+        }
+            catch {
                 
         }
     }
