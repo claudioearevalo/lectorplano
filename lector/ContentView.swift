@@ -19,18 +19,32 @@ struct ContentView: View {
     @State private var mensaje = "None"
     @State private var contenidoDelarchivo = ""
     @State private var resultado:URL?
+    @State private var presentacionAlerta = false
     
     private let tipoDearchivos = ["txt", "md", "csv"]
     
     var body: some View {
         VStack{
             HStack{
-            Label("lector-nombreDelaapp-key", systemImage: "bolt.fill")
-            .frame(width: 100, height: 50)
-            .background(Color.yellow)
-            .foregroundColor(Color.black)
-            .cornerRadius(6)
-            .padding()
+ 
+                Button( role: .destructive, action: {
+
+                    presentacionAlerta = true
+                    
+                })
+                {
+                 Label("lector-nombreDelaapp-key", systemImage: "bolt.fill")
+                }
+                .frame(width: 100, height: 50)
+                .aspectRatio(contentMode: .fill)
+                .background(Color.yellow)
+                .foregroundColor(Color.black)
+                .cornerRadius(6)
+                .padding()
+                .buttonStyle(BorderlessButtonStyle())
+                .alert("Desarrollado por claudioearevalo@gmail.com\n" + versionApp, isPresented: $presentacionAlerta, actions: {})
+                
+                           
                 Button(role: .destructive, action:
                 {
 
